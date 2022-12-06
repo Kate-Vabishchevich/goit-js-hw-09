@@ -16,3 +16,44 @@ img {
   display: block;
   max-width: 100%;
 }
+
+input {
+  width: 220px;
+  height: 30px;
+  border-radius: 4px;
+}
+
+button {
+  width: 60px;
+  height: 30px;
+  background-color: #3b3fb4;
+  color: #ffffff;
+  font-size: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:disabled {
+  background-color: #e4e4e4;
+}
+
+.timer {
+  display: flex;
+  gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  
+}
+
+.label {
+  text-transform: uppercase;
+}
+
+.value {
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+}

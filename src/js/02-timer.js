@@ -17,7 +17,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
     onClose(selectedDates) {
-        if (selectedDates <= Date.now()) {
+        if (selectedDates[0] <= Date.now()) {
           Notiflix.Notify.warning("Please choose a date in the future");
       }
         console.log(selectedDates[0]);
@@ -27,16 +27,17 @@ const options = {
   },
 };
 
-flatpickr('#datetime-picker', options);
+flatpickr(refs.input, options);
 
 function onTimerStart() {
     intervalId = setInterval(() => {
         currentTime = Date.now();
         console.log(currentTime);
         refs.startBtn.setAttribute('disabled', true);
-        diff = selectedTime - currentTime;
-        changeCountdown(diff);
-            if (diff < 1000) {
+        deltaTime = selectedTime - currentTime;
+        timerFace = convertMs(deltaTime);
+        updateClockFace(timerFace);
+            if (deltaTime <= 1000) {
                 stopCountdown();
     }
     }, 1000)
@@ -46,6 +47,16 @@ function stopCountdown() {
     clearInterval(intervalId)
 }
 
+function updateClockFace({days, hours, minutes, seconds}) {
+    refs.days.textContent = days;
+    refs.hours.textContent = hours;
+    refs.minutes.textContent = minutes;
+    refs.seconds.textContent = seconds;
+}
+
+function addLeadingZero(value) {
+    return String(value).padStart(2, '0');
+}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -55,13 +66,15 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = Math.floor(ms / day);
+  const days = addLeadingZero(Math.floor(ms / day));
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
 
   return { days, hours, minutes, seconds };
 }
+
+refs.startBtn.addEventListener('click', onTimerStart)
