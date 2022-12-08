@@ -12,19 +12,19 @@ const refs = {
 }
 
 const options = {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
+    enableTime: true,
+    time_24hr: true,
+    defaultDate: new Date(),
+    minuteIncrement: 1,
     onClose(selectedDates) {
         if (selectedDates[0] <= Date.now()) {
-          Notiflix.Notify.warning("Please choose a date in the future");
-      }
+        Notiflix.Notify.warning("Please choose a date in the future");
+    }
         console.log(selectedDates[0]);
         refs.startBtn.removeAttribute('disabled');
         selectedTime = selectedDates[0].getTime();
         // console.log(selectedTime)
-  },
+},
 };
 
 flatpickr(refs.input, options);
