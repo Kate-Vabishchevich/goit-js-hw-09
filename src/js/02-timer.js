@@ -11,6 +11,11 @@ const refs = {
     seconds:document.querySelector('[data-seconds]')
 }
 
+let intervalId = null;
+let selectedTime = null;
+let deltaTime = null;
+let timerFace = null;
+
 const options = {
     enableTime: true,
     time_24hr: true,
@@ -23,7 +28,6 @@ const options = {
         console.log(selectedDates[0]);
         refs.startBtn.removeAttribute('disabled');
         selectedTime = selectedDates[0].getTime();
-        // console.log(selectedTime)
 },
 };
 
