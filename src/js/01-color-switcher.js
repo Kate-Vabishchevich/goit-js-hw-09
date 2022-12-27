@@ -6,6 +6,7 @@ const refs = {
 }
 
 const TIME_INTERVAL = 1000;
+let intervalId = null;
 
 refs.startBtn.addEventListener('click', onStartBtn);
 refs.stopBtn.addEventListener('click', onStopBtn);
