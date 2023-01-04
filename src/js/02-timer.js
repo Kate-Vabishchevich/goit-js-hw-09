@@ -15,6 +15,7 @@ let intervalId = null;
 let selectedTime = null;
 let deltaTime = null;
 let timerFace = null;
+let currentTime = null;
 
 const options = {
     enableTime: true,

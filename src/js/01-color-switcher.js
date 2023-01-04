@@ -29,3 +29,4 @@ function onStopBtn() {
     clearInterval(intervalId);
     refs.startBtn.removeAttribute('disabled');
 }
+
