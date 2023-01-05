@@ -11,11 +11,13 @@ const refs = {
     seconds:document.querySelector('[data-seconds]')
 }
 
+const INTERVAL = 1000;
 let intervalId = null;
 let selectedTime = null;
 let deltaTime = null;
 let timerFace = null;
-let currentTime = null;
+
+refs.startBtn.setAttribute('disabled', true);
 
 const options = {
     enableTime: true,
@@ -25,10 +27,11 @@ const options = {
     onClose(selectedDates) {
         if (selectedDates[0] <= Date.now()) {
         Notiflix.Notify.warning("Please choose a date in the future");
-    }
+        } else {
         console.log(selectedDates[0]);
-        refs.startBtn.removeAttribute('disabled');
+        refs.startBtn.removeAttribute('disabled', 'disabled');
         selectedTime = selectedDates[0].getTime();
+        }       
 },
 };
 
@@ -36,21 +39,16 @@ flatpickr(refs.input, options);
 
 function onTimerStart() {
     intervalId = setInterval(() => {
-        currentTime = Date.now();
-        console.log(currentTime);
         refs.startBtn.setAttribute('disabled', true);
-        deltaTime = selectedTime - currentTime;
+        deltaTime = selectedTime - Date.now();
         timerFace = convertMs(deltaTime);
         updateClockFace(timerFace);
             if (deltaTime <= 1000) {
-                stopCountdown();
+                clearInterval(intervalId);
+                return;
     }
-    }, 1000)
+    }, INTERVAL)
 };
-
-function stopCountdown() {
-    clearInterval(intervalId)
-}
 
 function updateClockFace({days, hours, minutes, seconds}) {
     refs.days.textContent = days;
